@@ -1,174 +1,110 @@
-import { lazy, Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ClientOnly } from "@tanstack/react-router";
 
-const HeroScene = lazy(() => import("./HeroScene"));
-
-const SERVICES = ["Construction", "PEB", "Steel Fabrication", "Material Supply"];
 const TICKER = [
-  "PEB STRUCTURES",
-  "WAREHOUSES",
-  "FACTORIES",
-  "RCC WORKS",
-  "STRUCTURAL STEEL",
-  "TMT SUPPLY",
-  "INDUSTRIAL SHEDS",
+  "ON-TIME EXECUTION",
+  "SAFETY FIRST",
+  "INTEGRATED PEB CONSTRUCTION",
+  "STRUCTURAL STEEL FABRICATION",
+  "MATERIAL SUPPLY (SAND, AGGREGATES, BRICKS, CEMENT, TMT)",
+  "CIVIL CONSTRUCTION",
+  "100+ COMPLETED PROJECTS",
 ];
-const HEADLINE = ["Building", "the", "Future", "of", "Industry"];
-
-function useTypewriter() {
-  const [text, setText] = useState("");
-  const [i, setI] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const full = SERVICES[i % SERVICES.length]!;
-    const done = !deleting && text === full;
-    const cleared = deleting && text === "";
-    const delay = done ? 1400 : cleared ? 200 : deleting ? 45 : 85;
-
-    const id = setTimeout(() => {
-      if (done) return setDeleting(true);
-      if (cleared) {
-        setDeleting(false);
-        setI((n) => n + 1);
-        return;
-      }
-      setText(deleting ? full.slice(0, text.length - 1) : full.slice(0, text.length + 1));
-    }, delay);
-    return () => clearTimeout(id);
-  }, [text, deleting, i]);
-
-  return text;
-}
 
 export default function HeroSection() {
-  const typed = useTypewriter();
-
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      {/* backdrop glow */}
-      <div className="pointer-events-none absolute inset-0 bg-hero-glow" aria-hidden />
+    <section className="relative min-h-screen w-full pt-20 flex flex-col justify-between bg-[#F5F2ED] overflow-hidden">
+      {/* Background Pattern - Fades out towards the right so it doesn't clash with the illustration */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-20 z-0" 
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104' viewBox='0 0 60 104'%3E%3Cpath d='M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z M30 52 L60 69.32 L60 103.96 L30 121.28 L0 103.96 L0 69.32 Z' fill='none' stroke='%23D4CEC7' stroke-width='0.8'/%3E%3C/svg%3E")`,
+          backgroundSize: "60px 104px",
+          maskImage: "linear-gradient(to right, black 0%, rgba(0,0,0,0.5) 30%, transparent 60%)",
+          WebkitMaskImage: "linear-gradient(to right, black 0%, rgba(0,0,0,0.5) 30%, transparent 60%)"
+        }}
+      />
 
-      {/* 3D layer */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-full md:block md:w-[62%]">
-        <ClientOnly fallback={null}>
-          <Suspense fallback={null}>
-            <HeroScene />
-          </Suspense>
-        </ClientOnly>
-      </div>
-      {/* mobile simplified CSS glow */}
-      <div className="pointer-events-none absolute right-[-30%] top-24 h-72 w-72 rounded-full bg-steel/20 blur-3xl md:hidden" aria-hidden />
-
-      {/* Navbar */}
-      <motion.nav
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative z-20 mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 sm:px-8"
-      >
-        <motion.a
-          href="#"
-          initial={{ opacity: 0, x: -16 }}
+      {/* Main Viewport Centered Row */}
+      <div className="flex-1 w-full max-w-[1700px] mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-6 lg:py-2 gap-6 lg:gap-8">
+        
+        {/* Left Content Column */}
+        <motion.div 
+          className="w-full lg:w-[40%] xl:w-[38%] flex flex-col justify-center items-start z-20 py-4"
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="font-display text-xl tracking-[0.2em] text-foreground sm:text-2xl"
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          NEWGEN<span className="text-ember"> TRADERS</span>
-        </motion.a>
-
-        <motion.div
-          initial={{ opacity: 0, x: 16 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.28, duration: 0.6 }}
-          className="flex items-center gap-1 rounded-full border border-glass-border bg-glass px-2 py-1.5 backdrop-blur-xl sm:gap-2 sm:px-3"
-        >
-          {["About", "Services", "Contact"].map((l) => (
-            <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
-              className="rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:bg-glass-strong hover:text-foreground sm:text-sm"
-            >
-              {l}
+          <div className="text-[0.7rem] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-[#C0143C] mb-3">
+            INTEGRATED CONSTRUCTION &amp; MATERIAL SOLUTIONS
+          </div>
+          
+          <h1 className="font-display text-[clamp(2.6rem,4.5vw,4.6rem)] leading-[0.9] tracking-tight text-[#111111] mb-4">
+            BUILDING THE
+            <br />
+            <span className="text-[#C0143C]">FUTURE</span>
+            <br />
+            OF INDUSTRY
+          </h1>
+          
+          <p className="text-[#555555] text-sm sm:text-base md:text-lg max-w-md leading-relaxed mb-6">
+            Specializing in Material Supply, Project Logistics, and Turnkey Solutions
+          </p>
+          
+          <div className="flex flex-wrap items-center gap-3.5">
+            <a href="#services" className="btn-crimson font-display px-7 py-3 tracking-wider text-sm sm:text-base">
+              EXPLORE SERVICES
             </a>
-          ))}
-        </motion.div>
-      </motion.nav>
-
-      {/* Center content */}
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-start px-5 pb-40 pt-16 sm:px-8 md:pt-24 lg:pt-32">
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-glass-border bg-glass px-4 py-1.5 text-[0.65rem] uppercase tracking-[0.28em] text-steel backdrop-blur-xl"
-        >
-          Integrated Construction Solutions
-        </motion.span>
-
-        <h1 className="font-display text-[clamp(2.75rem,9vw,7rem)] leading-[0.92] tracking-tight">
-          {HEADLINE.map((word, idx) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 48, filter: "blur(14px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.55 + idx * 0.13, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className={`mr-[0.28em] inline-block ${idx === 2 ? "text-ember" : ""}`}
+            <a 
+              href="#inquiry" 
+              className="inline-flex items-center justify-center px-7 py-3 border border-[#111111] bg-transparent text-[#111111] font-display text-sm sm:text-base tracking-wider hover:bg-[#111111] hover:text-white transition-colors duration-200"
             >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.25, duration: 0.7 }}
-          className="mt-7 max-w-xl text-base text-muted-foreground sm:text-lg"
-        >
-          Integrated Construction, PEB, Fabrication &amp; Building Material Solutions.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.7 }}
-          className="mt-4 font-mono text-sm uppercase tracking-[0.22em] text-steel sm:text-base"
-        >
-          <span className="text-muted-foreground">We deliver </span>
-          {typed}
-          <span className="ml-0.5 inline-block animate-caret text-ember">|</span>
+              REQUEST QUOTE
+            </a>
+          </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.7 }}
-          className="mt-10 flex flex-wrap gap-4"
+        {/* Right Content Column - Soft blend covering the top-left constellation mesh */}
+        <motion.div 
+          className="w-full lg:w-[60%] xl:w-[62%] relative flex justify-end items-center"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
         >
-          <a href="#services" className="btn-ember">
-            Explore Services
-          </a>
-          <a href="#contact" className="btn-ghost">
-            Contact Us
-          </a>
+          <div className="relative w-full max-w-[1050px] lg:-mr-8 xl:-mr-12">
+            {/* Top-Left Vignette Blend that seamlessly dissolves the constellation lines */}
+            <div 
+              className="absolute -top-6 -left-6 w-80 h-80 pointer-events-none z-10"
+              style={{
+                background: "radial-gradient(circle at 15% 15%, #F5F2ED 35%, rgba(245,242,237,0.92) 55%, rgba(245,242,237,0.5) 75%, transparent 100%)"
+              }}
+              aria-hidden
+            />
+
+            {/* Top-Edge soft feather overlay */}
+            <div 
+              className="absolute -top-2 inset-x-0 h-16 pointer-events-none z-10 bg-gradient-to-b from-[#F5F2ED] via-[#F5F2ED]/60 to-transparent"
+              aria-hidden
+            />
+            
+            <img 
+              src="/hero-isometric.jpg" 
+              alt="NEWGEN TRADERS - Integrated PEB Warehouse, Structural Steel, RCC Foundations, and Construction Material Yard" 
+              className="w-full h-auto object-contain pointer-events-none mix-blend-multiply"
+              loading="eager"
+            />
+          </div>
         </motion.div>
       </div>
 
-      {/* Marquee */}
-      <div className="absolute inset-x-0 bottom-0 z-20 border-y border-glass-border bg-glass py-3 backdrop-blur-xl">
-        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
-          {[0, 1].map((dup) => (
-            <div key={dup} className="flex gap-10" aria-hidden={dup === 1}>
-              {TICKER.map((t) => (
-                <span
-                  key={t}
-                  className="font-display text-sm tracking-[0.26em] text-muted-foreground sm:text-base"
-                >
-                  {t} <span className="text-ember">•</span>
-                </span>
-              ))}
+      {/* Bottom Marquee Ticker */}
+      <div className="w-full border-t border-[#E0DFDD] bg-[#F5F2ED] overflow-hidden relative z-20">
+        <div className="flex w-fit animate-marquee whitespace-nowrap py-3.5 sm:py-4">
+          {[...TICKER, ...TICKER].map((item, i) => (
+            <div key={i} className="flex items-center mx-8 sm:mx-10">
+              <span className="text-[#111111] font-bold text-sm sm:text-base tracking-[0.18em] font-display">
+                {item}
+              </span>
+              <div className="w-2 h-2 bg-[#C0143C] rotate-45 ml-10 sm:ml-12 flex-shrink-0" />
             </div>
           ))}
         </div>

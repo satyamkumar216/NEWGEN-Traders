@@ -14,12 +14,12 @@ function WarehouseFrame() {
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
       -mouse.current.y * 0.15,
-      0.05,
+      0.05
     );
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
       mouse.current.x * 0.6,
-      0.05,
+      0.05
     );
   });
 
@@ -32,46 +32,83 @@ function WarehouseFrame() {
     return arr;
   }, []);
 
-  const steel = "#38bdf8";
+  const crimsonWireframe = "#C0143C";
+  const crimsonGlow = "#E8194A";
 
   return (
     <group ref={group} scale={0.95}>
-      {/* main shell */}
+      {/* Main shell wireframe - Crimson 40% opacity */}
       <lineSegments>
         <edgesGeometry args={[new THREE.BoxGeometry(4.4, 2.6, 5.2)]} />
-        <lineBasicMaterial color={steel} transparent opacity={0.75} />
+        <lineBasicMaterial color={crimsonWireframe} transparent opacity={0.4} linewidth={1.5} />
       </lineSegments>
-      {/* roof pitch */}
+
+      {/* Inner offset wireframe structure */}
+      <lineSegments scale={0.98}>
+        <edgesGeometry args={[new THREE.BoxGeometry(4.4, 2.6, 5.2)]} />
+        <lineBasicMaterial color={crimsonGlow} transparent opacity={0.25} />
+      </lineSegments>
+
+      {/* Roof pitch */}
       <mesh position={[0, 1.3, 0]} rotation={[0, Math.PI / 4, 0]}>
         <lineSegments>
           <edgesGeometry args={[new THREE.ConeGeometry(3.3, 1.2, 4)]} />
-          <lineBasicMaterial color={steel} transparent opacity={0.55} />
+          <lineBasicMaterial color={crimsonWireframe} transparent opacity={0.4} linewidth={1.5} />
         </lineSegments>
       </mesh>
-      {/* columns */}
+
+      {/* Structural columns */}
       {columns.map((p, i) => (
         <lineSegments key={i} position={p}>
           <edgesGeometry args={[new THREE.BoxGeometry(0.14, 2.6, 0.14)]} />
-          <lineBasicMaterial color={i % 3 === 0 ? "#f97316" : steel} transparent opacity={0.5} />
+          <lineBasicMaterial
+            color={i % 2 === 0 ? crimsonGlow : crimsonWireframe}
+            transparent
+            opacity={0.45}
+          />
         </lineSegments>
       ))}
-      {/* floor grid */}
-      <gridHelper args={[7, 14, "#f97316", "#1e3a5f"]} position={[0, -1.32, 0]} />
+
+      {/* Parallelogram motif diagonal cross-bracings */}
+      {[-1.8, 1.8].map((z, idx) => (
+        <lineSegments key={idx} position={[0, 0, z]} rotation={[0, 0, Math.PI / 6]}>
+          <edgesGeometry args={[new THREE.BoxGeometry(4.2, 0.08, 0.08)]} />
+          <lineBasicMaterial color={crimsonWireframe} transparent opacity={0.35} />
+        </lineSegments>
+      ))}
+
+      {/* Floor grid - Crimson & Charcoal */}
+      <gridHelper args={[7, 14, "#C0143C", "#161616"]} position={[0, -1.32, 0]} />
     </group>
   );
 }
 
 function Particles() {
   const points = useRef<THREE.Points>(null);
-  const count = 320;
-  const positions = useMemo(() => {
-    const a = new Float32Array(count * 3);
+  const count = 350;
+  
+  const { positions, colors } = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+
+    const crimsonColor = new THREE.Color("#C0143C");
+    const crimsonGlowColor = new THREE.Color("#E8194A");
+    const whiteColor = new THREE.Color("#FFFFFF");
+
     for (let i = 0; i < count; i++) {
-      a[i * 3] = (Math.random() - 0.5) * 14;
-      a[i * 3 + 1] = (Math.random() - 0.5) * 9;
-      a[i * 3 + 2] = (Math.random() - 0.5) * 10;
+      pos[i * 3] = (Math.random() - 0.5) * 14;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 9;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+
+      // Crimson and White sparks ONLY
+      const rand = Math.random();
+      const chosenColor = rand > 0.4 ? (rand > 0.7 ? crimsonGlowColor : crimsonColor) : whiteColor;
+
+      col[i * 3] = chosenColor.r;
+      col[i * 3 + 1] = chosenColor.g;
+      col[i * 3 + 2] = chosenColor.b;
     }
-    return a;
+    return { positions: pos, colors: col };
   }, []);
 
   useFrame((_, delta) => {
@@ -87,13 +124,19 @@ function Particles() {
     attr.needsUpdate = true;
   });
 
-
   return (
     <points ref={points}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.045} color="#f97316" transparent opacity={0.8} sizeAttenuation />
+      <pointsMaterial
+        size={0.05}
+        vertexColors
+        transparent
+        opacity={0.85}
+        sizeAttenuation
+      />
     </points>
   );
 }
@@ -118,11 +161,13 @@ export default function HeroScene() {
       camera={{ position: [0, 0, 0.6], fov: 55 }}
       gl={{ antialias: true, alpha: true }}
     >
-      <ambientLight intensity={0.6} />
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 10, 5]} intensity={1.2} color="#E8194A" />
+      <pointLight position={[-3, 2, 3]} intensity={1} color="#C0143C" />
       <CameraRig />
       <WarehouseFrame />
       <Particles />
-      <fog attach="fog" args={["#0a0f1e", 8, 20]} />
+      <fog attach="fog" args={["#0D0D0D", 8, 20]} />
     </Canvas>
   );
 }
