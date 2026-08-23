@@ -67,3 +67,4 @@ npm i
 npm run dev
 ```
 # Newgentraders
+# Newgentraders
