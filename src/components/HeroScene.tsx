@@ -76,14 +76,17 @@ function Particles() {
 
   useFrame((_, delta) => {
     const geo = points.current?.geometry;
-    if (!geo) return;
-    const arr = geo.attributes.position.array as Float32Array;
+    const attr = geo?.attributes["position"];
+    if (!attr) return;
+    const arr = attr.array as Float32Array;
     for (let i = 0; i < count; i++) {
-      arr[i * 3 + 1] += delta * (0.15 + (i % 5) * 0.05);
-      if (arr[i * 3 + 1] > 4.5) arr[i * 3 + 1] = -4.5;
+      const idx = i * 3 + 1;
+      arr[idx] = (arr[idx] ?? 0) + delta * (0.15 + (i % 5) * 0.05);
+      if ((arr[idx] ?? 0) > 4.5) arr[idx] = -4.5;
     }
-    geo.attributes.position.needsUpdate = true;
+    attr.needsUpdate = true;
   });
+
 
   return (
     <points ref={points}>
