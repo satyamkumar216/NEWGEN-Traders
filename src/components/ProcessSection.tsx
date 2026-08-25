@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, FileCheck, Calculator, ShoppingCart, 
-  Wrench, Truck, Building, CheckCircle2, Clock, 
-  ChevronRight, ChevronLeft 
+  Wrench, Truck, Building, CheckCircle2, 
+  ChevronRight, ChevronLeft, ArrowRight 
 } from 'lucide-react';
 
 const steps = [
@@ -12,16 +12,16 @@ const steps = [
     label: 'REQUIREMENT',
     title: 'Requirement & Site Understanding',
     icon: Search,
-    duration: '1-2 Days',
-    desc: 'We conduct a thorough initial briefing and physical site visit if necessary, gathering precise requirements, dimensions, and operational constraints to form the baseline of the project.',
+    phase: 'Phase 01',
+    desc: 'We conduct a thorough initial briefing and physical site visit if necessary, gathering precise requirements, dimensions, access routes, and operational constraints to form the baseline of the project.',
     deliverables: ['Site Feasibility Summary', 'Initial Logistics Plan', 'Client Specification Notes'],
   },
   {
     id: '02',
-    label: 'REVIEW',
+    label: 'BOQ REVIEW',
     title: 'BOQ / Drawing / Specification Review',
     icon: FileCheck,
-    duration: '2-3 Days',
+    phase: 'Phase 02',
     desc: 'Our engineering team critically reviews architectural and structural drawings alongside the BOQ to identify any discrepancies, map material grades, and optimize the structural design for cost and safety.',
     deliverables: ['BOQ Verification Report', 'Material Grade Mapping', 'Drawing Discrepancy Checks'],
   },
@@ -30,54 +30,54 @@ const steps = [
     label: 'PLANNING',
     title: 'Technical & Commercial Planning',
     icon: Calculator,
-    duration: '2 Days',
-    desc: 'We generate a transparent, itemized commercial quotation aligned with an execution timeline Gantt chart, establishing clear payment milestones and a structured delivery approach.',
-    deliverables: ['Itemized Commercial Quotation', 'Execution Timeline Gantt', 'Payment Milestone Plan'],
+    phase: 'Phase 03',
+    desc: 'We generate a transparent, itemized commercial quotation aligned with a milestone execution roadmap, establishing clear project targets and a structured delivery approach.',
+    deliverables: ['Itemized Commercial Quotation', 'Milestone Execution Roadmap', 'Procurement Strategy'],
   },
   {
     id: '04',
     label: 'PROCUREMENT',
     title: 'Material Procurement',
     icon: ShoppingCart,
-    duration: 'Ongoing',
-    desc: 'Sourcing of high-grade raw materials (TMT, structural steel, aggregates) from trusted mills. Every batch undergoes quality compliance checks before being allocated to the shop floor or site.',
-    deliverables: ['Material Quality Certificates', 'Batch Dispatch Receipts', 'Stock Yard Allocation'],
+    phase: 'Phase 04',
+    desc: 'Direct sourcing of primary TMT steel, structural sections, cement, river/M-sand, and stone aggregates from trusted mills and quarries with strict quality compliance certificates.',
+    deliverables: ['Material Quality Certificates', 'Batch Dispatch Records', 'Stock Yard Allocation'],
   },
   {
     id: '05',
-    label: 'PREPARATION',
+    label: 'FABRICATION & CIVIL',
     title: 'Fabrication & Civil Preparation',
     icon: Wrench,
-    duration: '1-3 Weeks',
-    desc: 'Simultaneous operations commence: in-house precision fabrication of steel members (cutting, welding, drilling) while civil teams prepare site leveling, excavations, and RCC foundations.',
-    deliverables: ['Fabricated Steel Members', 'Shop Inspection Log', 'Cured RCC Foundations'],
+    phase: 'Phase 05',
+    desc: 'Simultaneous operations commence: workshop precision fabrication of steel members (cutting, welding, drilling) while civil teams execute site leveling, excavations, and RCC foundations.',
+    deliverables: ['Fabricated Structural Members', 'Shop Inspection Logs', 'Cured RCC Footings'],
   },
   {
     id: '06',
     label: 'MOBILISATION',
     title: 'Delivery & Site Mobilisation',
     icon: Truck,
-    duration: '1-2 Days',
+    phase: 'Phase 06',
     desc: 'Finished structural members and required heavy equipment (cranes, lifts) are dispatched to the site in a sequenced manner to prevent congestion and align with the erection schedule.',
-    deliverables: ['Challan Verification', 'Site Safety Clearance', 'Heavy Equipment Positioning'],
+    deliverables: ['Dispatch Challan Records', 'Site Safety Clearance', 'Crane & Equipment Setup'],
   },
   {
     id: '07',
     label: 'CONSTRUCTION',
     title: 'Construction & Erection',
     icon: Building,
-    duration: '1-4 Weeks',
-    desc: 'The core phase where the primary and secondary steel frames are erected, aligned, and bolted. Followed by weather-tight roofing, cladding, brickwork, and industrial flooring.',
-    deliverables: ['Erected PEB Frame', 'Weather-tight Roofing', 'Completed Brickwork & Flooring'],
+    phase: 'Phase 07',
+    desc: 'The core phase where primary and secondary steel frames are erected, aligned, and bolted, followed by weather-tight roofing, wall cladding installation, brickwork, and industrial flooring.',
+    deliverables: ['Erected PEB Structure', 'Weather-tight Roofing', 'Finished Civil & Masonry'],
   },
   {
     id: '08',
     label: 'HANDOVER',
-    title: 'Inspection & Handover',
+    title: 'Inspection, Rectification & Handover',
     icon: CheckCircle2,
-    duration: '2-3 Days',
-    desc: 'A final comprehensive joint inspection with the client. We verify structural alignments, rectify any snags, clear the site, and hand over the completed facility with all compliance documentation.',
-    deliverables: ['As-Built Checklist', 'Warranty & Compliance Docs', 'Final Project Handover'],
+    phase: 'Phase 08',
+    desc: 'A final comprehensive joint inspection with the client. We verify structural alignments, torque tightness, rectify any snags, clear the site, and hand over the completed facility with all compliance documentation.',
+    deliverables: ['Final Inspection Checklist', 'Quality & Compliance Docs', 'Formal Project Handover'],
   }
 ];
 
@@ -98,7 +98,6 @@ export default function ProcessSection() {
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
       
-      // Calculate active step smoothly based on progress
       const stepIdx = Math.min(steps.length - 1, Math.max(0, Math.floor(progress * steps.length)));
       setActiveStep(stepIdx);
     };
@@ -207,38 +206,37 @@ export default function ProcessSection() {
               </div>
             </div>
 
-            {/* RIGHT: Content Card */}
+            {/* RIGHT: Content Card with Rounded Design */}
             <div className="lg:col-span-7">
-              <div className="bg-[#FFFFFF] border border-[#E0DFDD] rounded-xl p-6 sm:p-8 md:p-10 relative overflow-hidden shadow-sm">
+              <div className="bg-[#FFFFFF] border border-[#E0DFDD] rounded-2xl p-6 sm:p-8 md:p-10 relative overflow-hidden shadow-sm">
                 
                 {/* Large Background Watermark Step Number */}
                 <div className="absolute -right-4 -top-6 text-[120px] sm:text-[150px] font-display text-[#F5F4F2] leading-none pointer-events-none select-none z-0">
                   {step.id}
                 </div>
 
-                <div className="relative z-10 min-h-[380px] flex flex-col justify-between">
+                <div className="relative z-10 min-h-[360px] flex flex-col justify-between">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeStep}
-                      initial={{ opacity: 0, y: 16 }}
+                      initial={{ opacity: 0, y: 14 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -16 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      exit={{ opacity: 0, y: -14 }}
+                      transition={{ duration: 0.28, ease: "easeOut" }}
                       className="flex-grow"
                     >
                       {/* Card Header */}
                       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E0DFDD]">
                         <div className="flex items-center space-x-3.5">
-                          <div className="w-10 h-10 bg-[#F5F4F2] flex items-center justify-center rounded-lg border border-[#E0DFDD]">
+                          <div className="w-10 h-10 bg-[#F5F4F2] flex items-center justify-center rounded-xl border border-[#E0DFDD]">
                             <StepIcon className="w-5 h-5 text-[#C0143C]" />
                           </div>
                           <span className="text-[#C0143C] font-mono font-bold tracking-wider text-xs uppercase">
                             Step {step.id} of 08
                           </span>
                         </div>
-                        <div className="flex items-center text-[#555555] text-xs font-mono font-medium bg-[#F5F4F2] px-3 py-1.5 rounded-md border border-[#E0DFDD]">
-                          <Clock className="w-3.5 h-3.5 mr-1.5 text-[#C0143C]" />
-                          {step.duration}
+                        <div className="flex items-center text-[#555555] text-xs font-mono font-semibold bg-[#F5F4F2] px-3.5 py-1.5 rounded-full border border-[#E0DFDD]">
+                          {step.phase}
                         </div>
                       </div>
 
@@ -251,15 +249,15 @@ export default function ProcessSection() {
                         {step.desc}
                       </p>
 
-                      {/* Deliverables List */}
+                      {/* Deliverables List with Rounded Pill Cards */}
                       <div>
                         <h4 className="text-xs font-mono font-bold text-[#C0143C] tracking-[0.18em] uppercase mb-3">
                           Key Outputs &amp; Deliverables
                         </h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           {step.deliverables.map((item, i) => (
-                            <div key={i} className="flex items-center bg-[#F5F4F2] border border-[#E0DFDD] p-3 rounded-lg">
-                              <CheckCircle2 className="w-4 h-4 text-[#C0143C] mr-2 shrink-0" />
+                            <div key={i} className="flex items-center bg-[#F5F4F2] border border-[#E0DFDD] p-3.5 rounded-xl">
+                              <CheckCircle2 className="w-4 h-4 text-[#C0143C] mr-2.5 shrink-0" />
                               <span className="text-[#111111] font-mono text-xs leading-snug">{item}</span>
                             </div>
                           ))}
@@ -273,7 +271,7 @@ export default function ProcessSection() {
                     <button 
                       onClick={() => handleStepClick(Math.max(0, activeStep - 1))}
                       disabled={activeStep === 0}
-                      className="inline-flex items-center px-4 py-2 border border-[#E0DFDD] bg-[#F5F4F2] text-[#111111] font-mono text-xs uppercase tracking-wider rounded-md disabled:opacity-30 hover:border-[#111111] transition-colors cursor-pointer"
+                      className="inline-flex items-center px-4 py-2 border border-[#E0DFDD] bg-[#F5F4F2] text-[#111111] font-mono text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:border-[#111111] transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4 mr-1" /> Prev
                     </button>
@@ -283,7 +281,7 @@ export default function ProcessSection() {
                     <button 
                       onClick={() => handleStepClick(Math.min(steps.length - 1, activeStep + 1))}
                       disabled={activeStep === steps.length - 1}
-                      className="inline-flex items-center px-4 py-2 bg-[#C0143C] text-white font-mono text-xs uppercase tracking-wider rounded-md disabled:opacity-30 hover:bg-[#960F2E] transition-colors cursor-pointer"
+                      className="inline-flex items-center px-5 py-2 bg-[#C0143C] text-white font-mono text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:bg-[#960F2E] transition-colors cursor-pointer"
                     >
                       Next <ChevronRight className="w-4 h-4 ml-1" />
                     </button>
