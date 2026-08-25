@@ -1,172 +1,170 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Warehouse, Hammer, HardHat, Truck, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 const services = [
   {
-    id: "peb",
+    number: "01",
     title: "PEB & Industrial Construction",
-    subtitle: "Pre-Engineered Steel Sheds & Industrial Warehouses",
-    icon: Warehouse,
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
-    description: "We undertake and support Pre-Engineered Building (PEB) and industrial shed requirements including warehouses, factory buildings, manufacturing sheds, workshops, storage facilities, logistics structures, commercial structures and related steel buildings. Scope can include structural steel, roofing, wall cladding, fabrication, delivery and erection coordination according to approved drawings and project specifications.",
-    features: [
-      "Warehouses & Factory Buildings",
-      "Manufacturing Sheds & Workshops",
-      "Storage & Logistics Structures",
-      "Roofing, Wall Cladding & Erection"
+    description: "End-to-end Pre-Engineered Building solutions from structural steel design and fabrication to complete on-site erection.",
+    deliverables: [
+      "Warehouses, factory sheds & logistics facilities",
+      "Structural steel framing, rafters & purlins",
+      "Insulated roofing & profile wall cladding",
+      "Turnkey erection according to approved drawings"
     ],
-    specs: ["Approved Drawing Coordination", "Full Turnkey Erection", "High-Tensile Steel & Cladding"]
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Steel warehouse structure frame under construction",
+    imageLeft: true,
+    bg: "bg-[#FFFFFF]"
   },
   {
-    id: "structural",
+    number: "02",
     title: "Structural Steel Fabrication",
-    subtitle: "Precision Cutting, Drilling, Welding & Assembly",
-    icon: Hammer,
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
-    description: "Our fabrication scope includes project-oriented structural steel fabrication, cutting, drilling, welding, assembly and preparation of steel members and components. Applications include PEB frames, industrial sheds, platforms, supports, stair structures, canopies, mezzanine structures and other project-specific steelwork.",
-    features: [
-      "Cutting, Drilling, Welding & Assembly",
-      "PEB Frames & Industrial Sheds",
-      "Mezzanines, Platforms & Walkways",
-      "Supports, Stair Structures & Canopies"
+    description: "Workshop-precision cutting, drilling, certified welding, and custom assembly of project-oriented steel members.",
+    deliverables: [
+      "PEB primary & secondary steel frames",
+      "Heavy industrial sheds, platforms & walkways",
+      "Mezzanine structures, stairs & canopies",
+      "Certified welding & shop inspection compliance"
     ],
-    specs: ["Project-Oriented Fabrication", "Shop Assembly & Inspection", "Certified Welding Standards"]
+    image: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Industrial steel fabrication and certified welding",
+    imageLeft: false,
+    bg: "bg-[#F5F4F2]"
   },
   {
-    id: "civil",
+    number: "03",
     title: "Civil & Building Construction",
-    subtitle: "RCC Works, Foundations & Industrial Flooring",
-    icon: HardHat,
-    image: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1200&q=80",
-    description: "Civil construction capability includes excavation and foundations, RCC works, columns, beams and slabs, masonry, plinth works, industrial flooring, boundary works, drainage and allied civil/site development activities, according to project scope and approved drawings.",
-    features: [
-      "Excavation & Machine Foundations",
-      "RCC Columns, Beams & Slabs",
-      "Plinth Works, Masonry & Wall Construction",
-      "Industrial Flooring & Site Drainage"
+    description: "Heavy civil execution bridging foundation excavations, reinforced concrete columns, and durable industrial floorings.",
+    deliverables: [
+      "Excavations & machine foundations",
+      "RCC columns, beams, footings & slabs",
+      "Plinth works, masonry & perimeter walls",
+      "Heavy-duty industrial flooring & site drainage"
     ],
-    specs: ["Approved Drawing Execution", "High-Grade RCC Foundations", "Site Development & Drainage"]
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Civil foundation and reinforced concrete construction site",
+    imageLeft: true,
+    bg: "bg-[#FFFFFF]"
   },
   {
-    id: "supply",
+    number: "04",
     title: "Building Material Supply",
-    subtitle: "Sand, Aggregates, Bricks, Cement & TMT Steel",
-    icon: Truck,
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
-    description: "NEWGEN TRADERS supplies construction and industrial materials including river sand, M-sand, stone chips/aggregates, bricks, fly-ash bricks, cement, TMT steel and other industrial construction materials. Supply is arranged according to project specifications, quantities, delivery schedules and site requirements.",
-    features: [
-      "River Sand & Manufactured M-Sand",
-      "Stone Chips & Graded Aggregates",
-      "Red Clay & Eco Fly-Ash Bricks",
-      "Certified TMT Steel & Cement"
+    description: "Direct mill procurement and scheduled site delivery of primary industrial and civil construction materials.",
+    deliverables: [
+      "River sand & manufactured M-sand",
+      "Stone chips & graded aggregates",
+      "Primary TMT steel bars & cement",
+      "Red clay bricks & eco-friendly fly-ash bricks"
     ],
-    specs: ["Direct Sourcing from Mills", "Scheduled Bulk Site Deliveries", "Quality Tested Supply"]
+    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Stacked TMT steel and bulk construction materials yard",
+    imageLeft: false,
+    bg: "bg-[#F5F4F2]"
   }
 ];
 
 export default function ServicesSection() {
-  const [activeService, setActiveService] = useState(services[0]);
-
   return (
-    <section id="services" className="py-24 bg-[#F5F4F2]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center max-w-3xl mx-auto">
-          <span className="text-[#C0143C] font-mono font-bold tracking-[0.2em] text-xs uppercase mb-3 block">
-            FOUR CORE PILLARS
+    <section id="services" className="w-full">
+      {/* Section Header */}
+      <div className="bg-[#FFFFFF] pt-24 pb-16 px-6 lg:px-12 border-b border-[#E0DFDD]">
+        <div className="max-w-7xl mx-auto">
+          <span className="block text-xs font-mono font-bold text-[#C0143C] tracking-[0.2em] uppercase mb-3">
+            FOUR CORE CAPABILITIES
           </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#111111] tracking-tight mb-4">
-            Our Core <span className="text-[#C0143C]">Services &amp; Capabilities</span>
+          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display text-[#111111] tracking-tight leading-none">
+            WHAT WE DO
           </h2>
-          <p className="text-[#555555] text-base md:text-lg leading-relaxed">
-            From material supply to complete structural steel and civil execution, we provide integrated solutions tailored to industrial and commercial requirements.
-          </p>
+          <div className="w-[60px] h-[2px] bg-[#C0143C] mt-4" />
         </div>
+      </div>
 
-        {/* Tab Buttons */}
-        <div className="flex flex-wrap justify-center gap-2.5 mb-12">
-          {services.map((service) => (
-            <button
-              key={service.id}
-              onClick={() => setActiveService(service)}
-              className={`px-5 py-3 text-xs sm:text-sm font-mono uppercase tracking-wider transition-colors border rounded-md cursor-pointer ${
-                activeService.id === service.id
-                  ? 'bg-[#C0143C] text-white border-[#C0143C] font-bold'
-                  : 'bg-white text-[#555555] border-[#E0DFDD] hover:bg-[#F5F4F2]'
-              }`}
+      {/* Editorial Spread Rows */}
+      <div className="w-full">
+        {services.map((service, index) => {
+          const isImageLeft = service.imageLeft;
+
+          return (
+            <div 
+              key={service.number} 
+              className={`w-full ${service.bg} overflow-hidden`}
             >
-              {service.title}
-            </button>
-          ))}
-        </div>
+              <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[580px] lg:min-h-[640px] items-stretch">
+                
+                {/* Image Column */}
+                <motion.div 
+                  className={`w-full h-[360px] sm:h-[450px] lg:h-auto relative overflow-hidden ${
+                    isImageLeft ? 'lg:order-1' : 'lg:order-2'
+                  }`}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                >
+                  <img 
+                    src={service.image} 
+                    alt={service.imageAlt}
+                    className="w-full h-full object-cover saturate-[0.85] contrast-[1.05]"
+                    loading="lazy"
+                  />
+                </motion.div>
 
-        {/* Selected Service Card */}
-        <div className="min-h-[500px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeService.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
-            >
-              {/* Image */}
-              <div className="lg:col-span-5 rounded-xl overflow-hidden border border-[#E0DFDD] shadow-sm bg-white aspect-[4/3] lg:aspect-auto lg:h-full">
-                <img
-                  src={activeService.image}
-                  alt={activeService.title}
-                  className="w-full h-full object-cover"
-                />
+                {/* Text Content Column */}
+                <motion.div 
+                  className={`w-full flex items-center justify-center px-8 sm:px-14 lg:px-20 py-16 lg:py-24 ${
+                    isImageLeft ? 'lg:order-2' : 'lg:order-1'
+                  }`}
+                  initial={{ opacity: 0, x: isImageLeft ? 30 : -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <div className="max-w-[480px] w-full relative">
+                    
+                    {/* Large Watermark Number behind title */}
+                    <div className="text-[6.5rem] sm:text-[8rem] lg:text-[9rem] font-display text-[#E8E8E8] leading-none select-none absolute -top-12 sm:-top-16 -left-2 z-0 pointer-events-none tracking-tighter">
+                      {service.number}
+                    </div>
+
+                    {/* Title & Content */}
+                    <div className="relative z-10 pt-4">
+                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display text-[#111111] tracking-tight leading-tight mb-3">
+                        {service.title}
+                      </h3>
+
+                      <p className="text-[#555555] text-sm sm:text-base leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+
+                      {/* Deliverables List (Dash Prefix) */}
+                      <ul className="space-y-2.5 mb-8">
+                        {service.deliverables.map((item, i) => (
+                          <li key={i} className="flex items-start text-xs sm:text-sm text-[#444444] font-mono leading-relaxed">
+                            <span className="text-[#C0143C] font-bold mr-2.5 shrink-0">—</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Text Link */}
+                      <a 
+                        href="#inquiry" 
+                        className="inline-flex items-center text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#C0143C] hover:text-[#960F2E] transition-colors group"
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
+                      </a>
+                    </div>
+
+                  </div>
+                </motion.div>
+
               </div>
-
-              {/* Content Card */}
-              <div className="lg:col-span-7 bg-white p-6 sm:p-8 md:p-10 rounded-xl border-l-4 border-l-[#C0143C] border-y border-r border-[#E0DFDD] shadow-sm flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <activeService.icon size={28} className="text-[#C0143C] shrink-0" />
-                    <span className="text-xs font-mono text-[#888888] uppercase tracking-wider">{activeService.subtitle}</span>
-                  </div>
-                  
-                  <h3 className="text-2xl sm:text-3xl font-display text-[#111111] mb-3">{activeService.title}</h3>
-                  
-                  <p className="text-[#555555] mb-6 leading-relaxed text-sm sm:text-base">
-                    {activeService.description}
-                  </p>
-
-                  <div className="mb-6">
-                    <h4 className="text-xs font-mono font-bold text-[#111111] uppercase tracking-wider mb-3">Scope &amp; Deliverables</h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {activeService.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 size={16} className="text-[#C0143C] shrink-0 mt-0.5" />
-                          <span className="text-[#555555] text-xs font-mono">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {activeService.specs.map((spec, i) => (
-                      <span key={i} className="px-3 py-1 bg-[#F5F4F2] border border-[#E0DFDD] text-[#555555] text-xs font-mono rounded-md">
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <a 
-                    href="#inquiry" 
-                    className="btn-crimson inline-block px-8 py-3 font-display text-sm tracking-wider uppercase text-center"
-                  >
-                    Request BOQ / Quote
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
