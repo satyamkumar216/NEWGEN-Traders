@@ -83,9 +83,9 @@ export default function WhyUsSection() {
               ))}
             </ul>
 
-            <button className="w-full py-4 bg-[#C0143C] text-white font-semibold text-lg hover:bg-[#960F2E] transition-colors mt-auto">
+            <a href="#inquiry" className="w-full py-4 bg-[#C0143C] text-white font-semibold text-lg hover:bg-[#960F2E] transition-colors mt-auto text-center inline-block">
               Partner With NEWGEN TRADERS
-            </button>
+            </a>
           </motion.div>
         </div>
 
