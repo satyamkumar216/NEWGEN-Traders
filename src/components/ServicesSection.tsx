@@ -13,8 +13,8 @@ const services = [
       "Insulated roofing & profile wall cladding",
       "Turnkey erection according to approved drawings"
     ],
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
-    imageAlt: "Steel warehouse structure frame under construction",
+    image: "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Industrial PEB steel warehouse frame and structural erection",
     imageLeft: true,
     bg: "bg-[#FFFFFF]"
   },
@@ -28,8 +28,8 @@ const services = [
       "Mezzanine structures, stairs & canopies",
       "Certified welding & shop inspection compliance"
     ],
-    image: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1600&q=80",
-    imageAlt: "Industrial steel fabrication and certified welding",
+    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Heavy structural steel fabrication and welding",
     imageLeft: false,
     bg: "bg-[#F5F4F2]"
   },
@@ -58,8 +58,8 @@ const services = [
       "Primary TMT steel bars & cement",
       "Red clay bricks & eco-friendly fly-ash bricks"
     ],
-    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1600&q=80",
-    imageAlt: "Stacked TMT steel and bulk construction materials yard",
+    image: "https://images.unsplash.com/photo-1535813547-99c456a41d4a?auto=format&fit=crop&w=1600&q=80",
+    imageAlt: "Direct construction material supply and stacked TMT steel",
     imageLeft: false,
     bg: "bg-[#F5F4F2]"
   }
@@ -71,7 +71,7 @@ export default function ServicesSection() {
       {/* Section Header */}
       <div className="bg-[#FFFFFF] pt-24 pb-16 px-6 lg:px-12 border-b border-[#E0DFDD]">
         <div className="max-w-7xl mx-auto">
-          <span className="block text-xs font-mono font-bold text-[#C0143C] tracking-[0.2em] uppercase mb-3">
+          <span className="block text-xs font-semibold text-[#C0143C] tracking-[0.2em] uppercase mb-3">
             FOUR CORE CAPABILITIES
           </span>
           <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display text-[#111111] tracking-tight leading-none">
@@ -83,7 +83,7 @@ export default function ServicesSection() {
 
       {/* Editorial Spread Rows */}
       <div className="w-full">
-        {services.map((service, index) => {
+        {services.map((service) => {
           const isImageLeft = service.imageLeft;
 
           return (
@@ -91,58 +91,58 @@ export default function ServicesSection() {
               key={service.number} 
               className={`w-full ${service.bg} overflow-hidden`}
             >
-              <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[580px] lg:min-h-[640px] items-stretch">
+              <div className="w-full grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[660px] items-stretch">
                 
                 {/* Image Column */}
                 <motion.div 
-                  className={`w-full h-[360px] sm:h-[450px] lg:h-auto relative overflow-hidden ${
+                  className={`w-full min-h-[380px] sm:min-h-[460px] lg:h-auto relative overflow-hidden bg-[#E8E6E3] ${
                     isImageLeft ? 'lg:order-1' : 'lg:order-2'
                   }`}
                   initial={{ opacity: 0, scale: 1.02 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
+                  viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 >
                   <img 
                     src={service.image} 
                     alt={service.imageAlt}
-                    className="w-full h-full object-cover saturate-[0.85] contrast-[1.05]"
+                    className="w-full h-full object-cover saturate-[0.88] contrast-[1.05]"
                     loading="lazy"
                   />
                 </motion.div>
 
                 {/* Text Content Column */}
                 <motion.div 
-                  className={`w-full flex items-center justify-center px-8 sm:px-14 lg:px-20 py-16 lg:py-24 ${
+                  className={`w-full flex items-center justify-center px-8 sm:px-14 lg:px-20 py-20 lg:py-28 ${
                     isImageLeft ? 'lg:order-2' : 'lg:order-1'
                   }`}
                   initial={{ opacity: 0, x: isImageLeft ? 30 : -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
+                  viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  <div className="max-w-[480px] w-full relative">
+                  <div className="max-w-[540px] w-full relative">
                     
-                    {/* Large Watermark Number behind title */}
-                    <div className="text-[6.5rem] sm:text-[8rem] lg:text-[9rem] font-display text-[#E8E8E8] leading-none select-none absolute -top-12 sm:-top-16 -left-2 z-0 pointer-events-none tracking-tighter">
+                    {/* Enlarged Watermark Number behind title */}
+                    <div className="text-[8rem] sm:text-[10rem] lg:text-[12rem] font-display text-[#E0DFDD] leading-none select-none absolute -top-16 sm:-top-24 -left-3 z-0 pointer-events-none tracking-tighter opacity-80">
                       {service.number}
                     </div>
 
                     {/* Title & Content */}
-                    <div className="relative z-10 pt-4">
-                      <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display text-[#111111] tracking-tight leading-tight mb-3">
+                    <div className="relative z-10 pt-6">
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-display text-[#111111] tracking-tight leading-[0.95] mb-4">
                         {service.title}
                       </h3>
 
-                      <p className="text-[#555555] text-sm sm:text-base leading-relaxed mb-6">
+                      <p className="text-[#555555] text-base sm:text-lg leading-relaxed mb-6">
                         {service.description}
                       </p>
 
-                      {/* Deliverables List (Dash Prefix) */}
-                      <ul className="space-y-2.5 mb-8">
+                      {/* Deliverables List (Clean Sans-Serif Typography) */}
+                      <ul className="space-y-3 mb-8">
                         {service.deliverables.map((item, i) => (
-                          <li key={i} className="flex items-start text-xs sm:text-sm text-[#444444] font-mono leading-relaxed">
-                            <span className="text-[#C0143C] font-bold mr-2.5 shrink-0">—</span>
+                          <li key={i} className="flex items-start text-sm sm:text-base text-[#333333] font-normal leading-relaxed">
+                            <span className="text-[#C0143C] font-semibold mr-3 shrink-0 text-base leading-snug">—</span>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -151,10 +151,10 @@ export default function ServicesSection() {
                       {/* Text Link */}
                       <a 
                         href="#inquiry" 
-                        className="inline-flex items-center text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#C0143C] hover:text-[#960F2E] transition-colors group"
+                        className="inline-flex items-center text-sm font-semibold tracking-wider uppercase text-[#C0143C] hover:text-[#960F2E] transition-colors group"
                       >
                         <span>View Details</span>
-                        <ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
+                        <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
                       </a>
                     </div>
 

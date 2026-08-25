@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, FileCheck, Calculator, ShoppingCart, 
   Wrench, Truck, Building, CheckCircle2, 
-  ChevronRight, ChevronLeft, ArrowRight 
+  ChevronRight, ChevronLeft 
 } from 'lucide-react';
 
 const steps = [
@@ -144,7 +144,7 @@ export default function ProcessSection() {
           
           {/* Section Heading */}
           <div className="mb-10 lg:mb-12">
-            <span className="block text-xs font-mono font-bold text-[#C0143C] tracking-[0.2em] uppercase mb-2">
+            <span className="block text-xs font-semibold text-[#C0143C] tracking-[0.2em] uppercase mb-2">
               WORKFLOW &amp; APPROACH
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-[#111111] tracking-tight leading-none">
@@ -191,12 +191,12 @@ export default function ProcessSection() {
                             : 'bg-[#FFFFFF] border-2 border-[#D4CFC9] group-hover:border-[#C0143C]'
                         }`} />
                       </div>
-                      <span className={`text-xs sm:text-sm tracking-[0.14em] font-mono font-bold uppercase transition-colors duration-300 ${
+                      <span className={`text-xs sm:text-sm tracking-wider font-semibold uppercase transition-colors duration-300 ${
                         isActive 
                           ? 'text-[#C0143C]' 
                           : isPassed
                           ? 'text-[#111111]'
-                          : 'text-[#888888] group-hover:text-[#111111]'
+                          : 'text-[#777777] group-hover:text-[#111111]'
                       }`}>
                         {s.id} • {s.label}
                       </span>
@@ -231,11 +231,11 @@ export default function ProcessSection() {
                           <div className="w-10 h-10 bg-[#F5F4F2] flex items-center justify-center rounded-xl border border-[#E0DFDD]">
                             <StepIcon className="w-5 h-5 text-[#C0143C]" />
                           </div>
-                          <span className="text-[#C0143C] font-mono font-bold tracking-wider text-xs uppercase">
+                          <span className="text-[#C0143C] font-semibold tracking-wider text-xs uppercase">
                             Step {step.id} of 08
                           </span>
                         </div>
-                        <div className="flex items-center text-[#555555] text-xs font-mono font-semibold bg-[#F5F4F2] px-3.5 py-1.5 rounded-full border border-[#E0DFDD]">
+                        <div className="flex items-center text-[#555555] text-xs font-semibold bg-[#F5F4F2] px-3.5 py-1.5 rounded-full border border-[#E0DFDD]">
                           {step.phase}
                         </div>
                       </div>
@@ -251,14 +251,14 @@ export default function ProcessSection() {
 
                       {/* Deliverables List with Rounded Pill Cards */}
                       <div>
-                        <h4 className="text-xs font-mono font-bold text-[#C0143C] tracking-[0.18em] uppercase mb-3">
+                        <h4 className="text-xs font-semibold text-[#C0143C] tracking-wider uppercase mb-3">
                           Key Outputs &amp; Deliverables
                         </h4>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           {step.deliverables.map((item, i) => (
                             <div key={i} className="flex items-center bg-[#F5F4F2] border border-[#E0DFDD] p-3.5 rounded-xl">
                               <CheckCircle2 className="w-4 h-4 text-[#C0143C] mr-2.5 shrink-0" />
-                              <span className="text-[#111111] font-mono text-xs leading-snug">{item}</span>
+                              <span className="text-[#111111] font-medium text-xs sm:text-sm leading-snug">{item}</span>
                             </div>
                           ))}
                         </div>
@@ -271,17 +271,17 @@ export default function ProcessSection() {
                     <button 
                       onClick={() => handleStepClick(Math.max(0, activeStep - 1))}
                       disabled={activeStep === 0}
-                      className="inline-flex items-center px-4 py-2 border border-[#E0DFDD] bg-[#F5F4F2] text-[#111111] font-mono text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:border-[#111111] transition-colors cursor-pointer"
+                      className="inline-flex items-center px-4 py-2 border border-[#E0DFDD] bg-[#F5F4F2] text-[#111111] font-semibold text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:border-[#111111] transition-colors cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4 mr-1" /> Prev
                     </button>
-                    <span className="text-xs font-mono text-[#888888]">
+                    <span className="text-xs font-semibold text-[#888888]">
                       {activeStep + 1} / {steps.length}
                     </span>
                     <button 
                       onClick={() => handleStepClick(Math.min(steps.length - 1, activeStep + 1))}
                       disabled={activeStep === steps.length - 1}
-                      className="inline-flex items-center px-5 py-2 bg-[#C0143C] text-white font-mono text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:bg-[#960F2E] transition-colors cursor-pointer"
+                      className="inline-flex items-center px-5 py-2 bg-[#C0143C] text-white font-semibold text-xs uppercase tracking-wider rounded-lg disabled:opacity-30 hover:bg-[#960F2E] transition-colors cursor-pointer"
                     >
                       Next <ChevronRight className="w-4 h-4 ml-1" />
                     </button>
